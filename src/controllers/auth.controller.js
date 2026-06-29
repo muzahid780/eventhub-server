@@ -15,8 +15,6 @@ const generateToken = (user) => {
 };
 
 // @desc    Register new user
-// @route   POST /api/auth/register
-// @access  Public
 const register = async (req, res) => {
   try {
     const { name, email, password, photoURL } = req.body;
@@ -56,8 +54,6 @@ const register = async (req, res) => {
 };
 
 // @desc    Login user
-// @route   POST /api/auth/login
-// @access  Public
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -96,8 +92,6 @@ const login = async (req, res) => {
 };
 
 // @desc    Get current user profile
-// @route   GET /api/auth/profile
-// @access  Private
 const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id)
@@ -118,8 +112,6 @@ const getProfile = async (req, res) => {
 };
 
 // @desc    Update user profile
-// @route   PUT /api/auth/profile
-// @access  Private
 const updateProfile = async (req, res) => {
   try {
     const { name, photoURL } = req.body;
@@ -152,8 +144,6 @@ const updateProfile = async (req, res) => {
 };
 
 // @desc    Change password
-// @route   POST /api/auth/change-password
-// @access  Private
 const changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
@@ -191,8 +181,6 @@ const changePassword = async (req, res) => {
 };
 
 // @desc    Firebase Login
-// @route   POST /api/auth/firebase
-// @access  Public
 const firebaseLogin = async (req, res) => {
   try {
     const { email, name, photoURL } = req.body;
