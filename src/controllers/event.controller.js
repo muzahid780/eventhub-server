@@ -3,8 +3,6 @@ const Participant = require("../models/Participant.model");
 const User = require("../models/User.model");
 
 // @desc    Create new event
-// @route   POST /api/events
-// @access  Private
 const createEvent = async (req, res) => {
   try {
     const { title, description, eventType, imageUrl, location, eventDate } =
@@ -29,7 +27,7 @@ const createEvent = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: "Event created successfully! 🎉",
+      message: "Event created successfully! ",
       event,
     });
   } catch (error) {
@@ -42,8 +40,6 @@ const createEvent = async (req, res) => {
 };
 
 // @desc    Get all upcoming events with search & filter
-// @route   GET /api/events/upcoming
-// @access  Public
 const getUpcomingEvents = async (req, res) => {
   try {
     const { page = 1, limit = 10, search = "", eventType = "" } = req.query;
@@ -93,8 +89,6 @@ const getUpcomingEvents = async (req, res) => {
 };
 
 // @desc    Get event by ID
-// @route   GET /api/events/:id
-// @access  Public
 const getEventById = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id)
@@ -122,8 +116,6 @@ const getEventById = async (req, res) => {
 };
 
 // @desc    Update event
-// @route   PUT /api/events/:id
-// @access  Private (only organizer)
 const updateEvent = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
@@ -157,7 +149,7 @@ const updateEvent = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Event updated successfully! ✅",
+      message: "Event updated successfully! ",
       event: updatedEvent,
     });
   } catch (error) {
@@ -170,8 +162,6 @@ const updateEvent = async (req, res) => {
 };
 
 // @desc    Delete event
-// @route   DELETE /api/events/:id
-// @access  Private (only organizer)
 const deleteEvent = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
@@ -199,7 +189,7 @@ const deleteEvent = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Event deleted successfully! 🗑️",
+      message: "Event deleted successfully! ",
     });
   } catch (error) {
     console.error("Delete event error:", error);
@@ -211,8 +201,6 @@ const deleteEvent = async (req, res) => {
 };
 
 // @desc    Join event
-// @route   POST /api/events/:id/join
-// @access  Private
 const joinEvent = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
@@ -269,7 +257,7 @@ const joinEvent = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Successfully joined the event! 🎉",
+      message: "Successfully joined the event! ",
       participant,
     });
   } catch (error) {
@@ -282,8 +270,6 @@ const joinEvent = async (req, res) => {
 };
 
 // @desc    Leave event
-// @route   POST /api/events/:id/leave
-// @access  Private
 const leaveEvent = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
@@ -332,8 +318,6 @@ const leaveEvent = async (req, res) => {
 };
 
 // @desc    Get joined events
-// @route   GET /api/events/joined/my
-// @access  Private
 const getJoinedEvents = async (req, res) => {
   try {
     const events = await Event.find({
@@ -358,8 +342,6 @@ const getJoinedEvents = async (req, res) => {
 };
 
 // @desc    Get manage events (created by user)
-// @route   GET /api/events/manage/my
-// @access  Private
 const getManageEvents = async (req, res) => {
   try {
     const events = await Event.find({
