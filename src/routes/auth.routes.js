@@ -3,9 +3,8 @@ const router = express.Router();
 const User = require("../models/User.model");
 const jwt = require("jsonwebtoken");
 
-// ✅ REGISTER
 router.post("/register", async (req, res) => {
-  console.log("📝 Register called");
+  console.log(" Register called");
   console.log("Body:", req.body);
 
   try {
@@ -28,7 +27,7 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // Create user - Model auto-hash করবে
+    // Create user
     const user = new User({
       name,
       email,
@@ -49,7 +48,7 @@ router.post("/register", async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: "Registration successful! 🎉",
+      message: "Registration successful! ",
       token,
       user: {
         id: user._id,
@@ -67,9 +66,8 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// ✅ LOGIN
 router.post("/login", async (req, res) => {
-  console.log("🔐 Login called");
+  console.log(" Login called");
   console.log("Email:", req.body.email);
 
   try {
@@ -109,7 +107,7 @@ router.post("/login", async (req, res) => {
 
     res.json({
       success: true,
-      message: "Login successful! 👋",
+      message: "Login successful! ",
       token,
       user: {
         id: user._id,
@@ -127,7 +125,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// ✅ PROFILE
 router.get("/profile", async (req, res) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
