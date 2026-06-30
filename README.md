@@ -1,11 +1,12 @@
 # 🌍 EventHub - Server Side
 
-## 📌 Live API URL
+## Live API URL
+
 [EventHub API](https://eventhub-server.vercel.app/api/health)
 
 ---
 
-## 📌 Features
+## Features
 
 - ✅ **User Authentication** - Register/Login with JWT Token
 - ✅ **Create Events** - Organize social service events with future date validation
@@ -19,9 +20,10 @@
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 ### Backend
+
 - **Node.js** - JavaScript runtime
 - **Express.js** - Web framework
 - **MongoDB** - NoSQL database
@@ -34,7 +36,8 @@
 
 ---
 
-## 📁 Project Structure
+## Project Structure
+
 eventhub-server/
 ├── src/
 │ ├── config/
@@ -60,3 +63,4 @@ eventhub-server/
 ├── package.json
 ├── vercel.json
 └── README.md
+# Redeploy
