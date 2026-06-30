@@ -7,13 +7,27 @@ const User = require("./models/User.model");
 const jwt = require("jsonwebtoken");
 
 dotenv.config({ path: path.join(__dirname, ".env") });
-
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Root Route
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'EventHub API Server',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      register: '/api/auth/register',
+      login: '/api/auth/login',
+      events: '/api/events/upcoming'
+    }
+  });
+});
 
 // REGISTER
 app.post("/api/auth/register", async (req, res) => {
