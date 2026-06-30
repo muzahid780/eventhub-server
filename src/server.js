@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
-const User = require("./models/User.model");
-const jwt = require("jsonwebtoken");
 
+// Load environment variables
 dotenv.config({ path: path.join(__dirname, ".env") });
+
 const app = express();
 
 // Middleware
@@ -15,129 +15,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Root Route
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.json({
     success: true,
-    message: 'EventHub API Server',
-    version: '1.0.0',
+    message: "EventHub API Server is running!",
     endpoints: {
-      health: '/api/health',
-      register: '/api/auth/register',
-      login: '/api/auth/login',
-      events: '/api/events/upcoming'
-    }
+      health: "/api/health",
+      register: "/api/auth/register",
+      login: "/api/auth/login",
+      events: "/api/events/upcoming",
+    },
   });
-});
-
-// REGISTER
-app.post("/api/auth/register", async (req, res) => {
-  console.log(" Register hit");
-  console.log("Body:", req.body);
-
-  try {
-    const { name, email, password } = req.body;
-
-    if (!name || !email || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "All fields are required",
-      });
-    }
-
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({
-        success: false,
-        message: "Email already exists",
-      });
-    }
-
-    const user = new User({
-      name,
-      email,
-      password,
-    });
-
-    await user.save();
-
-    const token = jwt.sign(
-      { id: user._id },
-      process.env.JWT_SECRET || "fallback_secret",
-      { expiresIn: "30d" },
-    );
-
-    res.status(201).json({
-      success: true,
-      message: "Registration successful! ",
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      },
-    });
-  } catch (error) {
-    console.error("Register Error:", error);
-    res.status(500).json({
-      success: false,
-      message: error.message || "Registration failed",
-    });
-  }
-});
-
-// LOGIN
-app.post("/api/auth/login", async (req, res) => {
-  console.log(" Login hit");
-
-  try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "Email and password required",
-      });
-    }
-
-    const user = await User.findOne({ email }).select("+password");
-    if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid credentials",
-      });
-    }
-
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid credentials",
-      });
-    }
-
-    const token = jwt.sign(
-      { id: user._id },
-      process.env.JWT_SECRET || "fallback_secret",
-      { expiresIn: "30d" },
-    );
-
-    res.json({
-      success: true,
-      message: "Login successful! ",
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      },
-    });
-  } catch (error) {
-    console.error("Login Error:", error);
-    res.status(500).json({
-      success: false,
-      message: error.message || "Login failed",
-    });
-  }
 });
 
 // Health Check
@@ -145,15 +33,29 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "OK", message: "Server running" });
 });
 
+// Import Routes
+const authRoutes = require("./routes/auth.routes");
+const eventRoutes = require("./routes/event.routes");
+
+// Use Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/events", eventRoutes);
+
 // 404 Handler
 app.use((req, res) => {
-  res.status(404).json({ success: false, message: "Route not found" });
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
 });
 
 // Error Handler
 app.use((err, req, res, next) => {
-  console.error("Server Error:", err);
-  res.status(500).json({ success: false, message: err.message });
+  console.error("Error:", err);
+  res.status(500).json({
+    success: false,
+    message: err.message || "Internal Server Error",
+  });
 });
 
 // Start Server
