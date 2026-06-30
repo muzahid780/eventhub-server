@@ -164,7 +164,6 @@ const validatePagination = [
   query("eventType").optional().trim(),
 ];
 
-// ✅ IMPORTANT: Handle validation errors
 const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -175,7 +174,7 @@ const handleValidationErrors = (req, res, next) => {
       errors: errorMessages,
     });
   }
-  next(); // ← এটা ঠিক আছে
+  next();
 };
 
 module.exports = {
