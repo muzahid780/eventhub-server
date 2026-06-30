@@ -1,7 +1,6 @@
 # 🌍 EventHub - Server Side
 
 ## 📌 Live API URL
-
 [EventHub API](https://eventhub-server.vercel.app/api/health)
 
 ---
@@ -23,7 +22,6 @@
 ## 🛠️ Technologies Used
 
 ### Backend
-
 - **Node.js** - JavaScript runtime
 - **Express.js** - Web framework
 - **MongoDB** - NoSQL database
@@ -37,7 +35,6 @@
 ---
 
 ## 📁 Project Structure
-
 eventhub-server/
 ├── src/
 │ ├── config/
