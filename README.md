@@ -3,6 +3,8 @@
 ## Live API URL
 
 [EventHub API](https://eventhub-server.vercel.app/api/health)
+Live link server-side: https://eventhub-server.onrender.com
+Live link client-side: https://eventhub-client.netlify.app
 
 ---
 
@@ -63,4 +65,5 @@ eventhub-server/
 ├── package.json
 ├── vercel.json
 └── README.md
+
 # Redeploy
